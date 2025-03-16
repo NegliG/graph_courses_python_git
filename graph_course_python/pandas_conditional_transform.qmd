@@ -1,0 +1,102 @@
+# Imports
+
+
+```{python}
+import pandas as pd
+import numpy as np
+import vega_datasets as vd
+import plotly_express as px
+```
+
+# Intro to replace
+
+```{python}
+tips = px.data.tips()
+tips['day'].value_counts()
+```
+
+
+```{python}
+day_mapping = {
+    "Sun": "Sunday",
+    "Sat": "Saturday",
+    "Thru": "Thursday",
+    "Fri": "Friday"
+}
+
+tips['day_full'] = tips['day'].replace(day_mapping)
+tips
+```
+
+```{python}
+# Other method
+
+tips['day'] = tips['day'].replace({
+    "Sun": "Sunday",
+    "Sat": "Saturday",
+    "Thru": "Thursday",
+    "Fri": "Friday"
+})
+tips
+```
+
+# Practice Q: Abbreviate Sex
+
+Replace the values in the 'sex' column to abbreviate the sex:
+
+- Replace "Female" with "F"
+- Replace "Male" with "M"
+
+Assign the result to a new column called 'sex_abbr' and desplay the first few rows.
+
+```{python}
+sex_mapping = {
+    "Female": "F",
+    "Male": "M"
+}
+
+tips['sex_abbr'] = tips['sex'].replace(sex_mapping)
+tips
+```
+
+# Handling Missing Values with replace()
+
+```{python}
+movies = vd.data.movies() #Not working for me.
+movies
+```
+
+# Categorizing Numeric Data with Custom Functions
+
+Recall from our previous lesson that we can use custom functions with conditional logic to transform variables. For example, we can categorize the US_Gross column into three categories based on the following criteria:
+
+- If the value is less than 10 million, the category is "Low".
+- If the value is between 10 million and 50 million, the category is "Medium".
+- If the value is greater than 50 million, the category is "High".
+
+```{python}
+def categ_gross(gross):
+    if gross < 10000000:
+        return "Low"
+    elif gross >= 10000000 and gross <= 50000000:
+        return "Medium"
+    elif gross > 50000000:
+        return "High"
+    else:
+        return None 
+
+categ_gross_vec = np.vectorize(categ_gross)
+```
+
+```{python}
+categ_gross_vec = np.vectorize(categ_gross, otypes=[object])
+```
+
+```{python}
+movies['Gross_Category'] = categ_gross_vec(movies['US_Gross'])
+movies['Gross_Category'].value_counts(dropna=False)
+```
+
+
+
+

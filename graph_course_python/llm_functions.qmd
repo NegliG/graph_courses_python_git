@@ -1,0 +1,148 @@
+# Imports
+
+```{python}
+from openai import OpenAI
+import pandas as pd
+import numpy as np
+from local_settings import OPENAI_KEY
+```
+
+# Setting up the OpenAI Client
+
+```{python}
+client = OpenAI(api_key = OPENAI_KEY)
+```
+
+# Making our first
+
+```{python}
+response = client.chat.completions.create(
+    model = "gpt-4o-mini",
+    messages = [{"role": "user",
+                 "content": "What is the most tourist-friendly city in France?"}]
+)
+```
+
+```{python}
+response.choices[0].message.content
+```
+
+## Deffining a Helper Function
+
+```{python}
+def llm_chat(message):
+    response = client.chat.completions.create(
+    model = "gpt-4o-mini",
+    messages = [{"role": "user",
+                 "content": message}])
+    return response.choices[0].message.content
+```
+
+```{python}
+llm_chat("Tell me why Python is an awesome Langauage?")
+```
+
+## Practice Q: Get tourist-friendly city in Brazil
+
+Use the 'llm_chat' function to ask the model for the most tourist-friendly city in Brazil. Store the response in a variable called 'rec_brazil'. Print the response.
+
+```{python}
+rec_brazil = llm_chat("Please, tell me what is the most tourist-friendly city in my beloved Brazil (I know the only correct answer is all of them, but please try to choose one)?")
+```
+
+```{python}
+rec_brazil
+```
+
+## Variables as Prompt Imputs
+
+```{python}
+def city_rec(country):
+    prompt = f"What is the most tourist-friendly city in {country}?"
+    return llm_chat(prompt)
+
+city_rec_vec = np.vectorize(city_rec)
+```
+
+```{python}
+city_rec("Nigeria")
+```
+
+```{python}
+country_df = pd.DataFrame({"country": ["Nigeria", "Chile", "Guatemala", "China"]})
+
+country_df
+```
+
+```{python}
+country_df["city_rec"] = city_rec_vec(country_df["country"])
+country_df.to_csv 
+```
+
+## Practice Q: Get Local Dishes
+
+Create a function called 'get_local_dishes' that takes a country as imput and return some of the most famous local dishes from that country. Then, vectorize and apply it to the 'country_df' DataFrame to add a column with local dish recommendations for each country
+
+```{python}
+def get_local_dishes(country):
+    prompt = f"What are some of the most famous local dishes in {country}?"
+    return llm_chat(prompt)
+
+get_local_dishes_vec = np.vectorize(get_local_dishes)
+```
+
+```{python}
+country_df["local_dishes"] = get_local_dishes_vec(country_df["country"])
+country_df
+```
+
+## Automated Summary
+
+
+```{python}
+import vega_datasets as vd
+
+movies = vd.data.movies().head()
+movies
+```
+
+# I got the following error:
+
+"ERROR: Could not find a version that satisfies the requirement vega_dataset (from versions: none)
+
+[notice] A new release of pip is available: 25.0 -> 25.0.1
+[notice] To update, run: pip install --upgrade pip
+ERROR: No matching distribution found for vega_dataset"
+
+## Practice Q: Weather Summary
+
+Using the first five rows of the 'seattle_weather' dataset form the 'vega_datasets', create a function that takes all weather columns for a particular day and generates a summary of the weather conditions or that day. The function should use the LLM to generate a one paragraph summary for the report, considering the data provided. Store the summary in a column called 'weather_summary'.
+
+```{python}
+weather = vd.data.seattle_weather().head()
+weather
+```
+
+```{python}
+weather["full_dict"] = weather.to_dict(orient = "records")
+weather
+```
+
+```{python}
+def weather_summ(weather_data):
+    prompt = f"Considering the following data on the weather conditions in Seattle {weather_data}, provide a one paragraph summary for my report"
+
+    return llm_chat(prompt)
+
+weather_summ_vec = np.vectorize(weather_summ)
+```
+
+```{python}
+weather["weather_summary"] = weather_summ_vec(weather["full_dict"])
+
+weather.to_csv("outputs/weather_outputs.csv")
+```
+
+
+
+
