@@ -1,0 +1,194 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Gapminder 2007\"\n",
+        "format: dashboard\n",
+        "theme: superhero\n",
+        "---"
+      ],
+      "id": "bfde6bb0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import plotly.express as px\n",
+        "\n",
+        "p = px.line(y = [1, 2, 3])"
+      ],
+      "id": "93efec84",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Layouts\n",
+        "## Row {height = \"30%\"}\n"
+      ],
+      "id": "24a81c31"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p"
+      ],
+      "id": "46ce221b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Column {.tabset width=\"20%\"}\n",
+        "\n",
+        "#### Tab 1\n"
+      ],
+      "id": "727d1cfd"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p"
+      ],
+      "id": "b00fa270",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### Tab 2\n"
+      ],
+      "id": "21353505"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p"
+      ],
+      "id": "3f96dc29",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Column {width=\"80%\"}\n"
+      ],
+      "id": "c4a3654a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p"
+      ],
+      "id": "16d07d2f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Tabsets\n",
+        "\n",
+        "## Row {.tabset height = \"70%\"}\n",
+        "\n",
+        "### Tab 1\n"
+      ],
+      "id": "ad367378"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p"
+      ],
+      "id": "69f2350f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Tab 2\n"
+      ],
+      "id": "a39ec883"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "p"
+      ],
+      "id": "8ce7fd48",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Value Boxes\n"
+      ],
+      "id": "da541aeb"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "tips = px.data.tips()\n",
+        "num_cols = tips.shape[1]\n",
+        "num_rows = tips.shape[0]"
+      ],
+      "id": "82dba313",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## {height = \"20%\"}\n",
+        "\n",
+        "::: {.valuebox title = \"Columns\" color = \"primary\" icon = \"heart\"}\n",
+        "`{python} num_cols`\n",
+        "\n",
+        "Few columns\n",
+        ":::\n",
+        "::: {.valuebox title = \"Rows\" color = \"secondary\" icon = \"arrow-down\"}\n",
+        "`{python} num_cols`\n",
+        "\n",
+        "Many columns\n",
+        ":::\n",
+        "::: {.valuebox title = \"Medium Number\" color = \"light\" icon=\"bar-chart\"}\n",
+        "1\n",
+        ":::\n"
+      ],
+      "id": "f7f17d7d"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
